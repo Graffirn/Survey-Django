@@ -1,0 +1,63 @@
+{% load staticfiles %}
+
+<html lang="en">
+<head>
+    <link rel="stylesheet" type="text/css" href="{% static 'yevrus/css/style.css' %}">
+    <link href="https://fonts.googleapis.com/css?family=Vollkorn&display=swap" rel="stylesheet">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <style>
+        .home-img {
+            background-image: url("/static/yevrus/img/homepage.png");
+            background-repeat: no-repeat;
+            width: 66%;
+            height: 100%;
+        }
+
+        .btn {
+            margin: 20%;
+            text-align: center;
+        }
+    </style>
+    <title> Yevrus </title>
+</head>
+<body>
+<div class="row">
+    <div class="col-sm-4">
+        <div class="form-group" style="text-align: center; padding-top: 30%">
+            <a class="col-sm-12" href="{% url 'yevrus:home' %}"><img src="/static/yevrus/img/Logo.png"></a>
+            <div class="form-group">
+                <div class="col-sm-6">
+                    <a type="button" class="btn btn-primary col-sm-6" href="{% url 'yevrus:login' %}">Login</a>
+                </div>
+                <div class="col-sm-6">
+                    <a type="button" class="btn btn-primary col-sm-6" href="{% url 'yevrus:register' %}">Register</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="home-img col-sm-8" id="left-side">
+    </div>
+
+</div>
+
+{#<div class="container-fluid bg-1 text-center">#}
+{#    <h1 class="cover-heading">Welcome!</h1>#}
+{#    <p class="lead">Let us help you make smarter decisions today.</p>#}
+{#    <p class="lead">#}
+{#        <a href="{% url 'yevrus:register' %}" class="btn btn-primary">Start today!</a>#}
+{#    </p>#}
+{#</div>#}
+{#<div class="container-fluid bg-2 text-center">#}
+{#    <h3>Already Signed Up?</h3>#}
+{#    <p class="lead">#}
+{#        <a href="{% url 'yevrus:login' %}" class="btn btn-primary">Click here!</a>#}
+{#    </p>#}
+{#</div>#}
+</body>
+</html>
+
+

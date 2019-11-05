@@ -1,0 +1,5 @@
+{% extends 'yevrus/dashboardlayout.html' %}
+{% block content %}
+    <h1>You have voted for <u>{{ choice.choice_text }}</u></h1>
+    <a href="{% url 'yevrus:dashboard' %}">Vote again?</a>
+{% endblock %}
