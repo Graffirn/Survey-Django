@@ -1,0 +1,13 @@
+{% load staticfiles %}
+
+<div class="container">
+    <ul class="nav nav-pills" style="font-weight: bold; font-size: 18px;font-family: 'Open Sans', sans-serif;">
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'yevrus:dashboard' %}"><img alt="logo" class="top-logo" src="{% static 'yevrus/img/logo.png' %}">
+                Home</a>
+        </li>
+        <li class="nav-item navbar-right">
+            <a href="{% url 'yevrus:register' %}"><span class="glyphicon glyphicon-user"></span> Sign Up</a>
+        </li>
+    </ul>
+</div>

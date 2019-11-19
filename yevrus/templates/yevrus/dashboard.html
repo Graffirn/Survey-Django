@@ -1,51 +1,41 @@
-{% extends 'yevrus/dashboardlayout.html' %}
+{% extends 'yevrus/includes/surveys_layout.html' %}
+
+{% block title %}
+    Dashboard
+{% endblock %}
+
 {% block content %}
     <div class="container">
-        {% if messages %}
-            <ul class="messages">
+        <div class="jumbotron">
+            {% if messages %}
                 {% for message in messages %}
-                    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                    {% if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
+                        <div class="alert alert-success" role="alert">{{ message }}</div>
+                    {% elif message.level ==  DEFAULT_MESSAGE_LEVELS.ERROR %}
+                        <div class="alert alert-danger" role="alert">{{ message }}</div>
+                    {% endif %}
                 {% endfor %}
-            </ul>
-        {% endif %}
-        <!-- {% if user.is_authenticated %}
-<h3 align="right"> Logged In: {{ user.username }} </h3>
-{% else %}
-<h3> You are not logged in </h3>
-{% endif %} -->
-        {% if latest_question_list %}
-            <br><br>
-            <div class="jumbotron">
-            <h3><u>DISCOVER POLLS</u></h3>
-            <div class="container">
-            {% if selected_choice %}<h1>You have voted for&nbsp;&nbsp;<u>{{ selected_choice.choice_text }}</u></h1>
             {% endif %}
-            {% if error_message %}<p style="color:red"><strong>{{ error_message }}</strong></p>{% endif %}
-            <br>
-            <ol>
-                {% for question in latest_question_list %}
-                    <li><h4>{{ question.question_text }}</h4>
-                    <br>
-                    <a href="{% url 'yevrus:chart' question.id %}" class="btn-primary">CURRENT STATS</a>
-                    <br><br><br>
-                    <ul>
-                        <form id="voteform" action="{% url 'yevrus:vote' question.id %}" method="POST">
-                            {% csrf_token %}
-                            {% for choice in question.choice_set.all %}
-                                <input type="radio" name="choice" id="choice{{ forloop.counter }}"
-                                       value="{{ choice.id }}"/>
-                                <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label><br/>
-                            {% endfor %}
-                            <br>
-                            <input type="submit" value="Vote"/>
-                        </form>
-                    </ul>
-                {% endfor %}
-            </ol>
-        {% else %}
-            <p>No polls are available.</p>
-        {% endif %}
-        </div>
+            <h2>Survey list</h2>
+            <hr>
+            {% if latest_survey_list %}
+                <ol>
+                    {% for survey in latest_survey_list %}
+                        <li>
+                            <h3>{{ survey.title }}</h3>
+                            {% if survey in filled_survey_list %}
+                                <a type="button" class="btn btn-info"
+                                   href="{% url 'yevrus:show_response' survey.key %}">Review response</a>
+                            {% else %}
+                                <a type="button" class="btn btn-primary"
+                                   href="{% url 'yevrus:surveyresponse' survey.key %}">Answer</a>
+                            {% endif %}
+                        </li>
+                    {% endfor %}
+                </ol>
+            {% else %}
+                <p>No surveys are available.</p>
+            {% endif %}
         </div>
     </div>
 {% endblock %}

@@ -1,27 +1,39 @@
-{% extends 'yevrus/layout.html' %}
+{% extends 'yevrus/includes/home_layout.html' %}
+
 {% load bootstrap4 %}
+
+{% block script %}
+    <script src='https://www.google.com/recaptcha/api.js'></script>
+{% endblock %}
+
+{% block style %}
+    <style>
+        .invalid-feedback {
+            color: darkred;
+        }
+    </style>
+{% endblock %}
+
+{% block title %}
+    Sign up
+{% endblock %}
+
 {% block content %}
     <div class="container">
         <div class="jumbotron">
-            <div class="container">
-                <h2>Sign up</h2>
-                <br>
-                <form method="POST">
-                    <div class="form-group">
-                        {% csrf_token %}
-                        {% bootstrap_form form %}
-
-                        <br>
-                        <script src='https://www.google.com/recaptcha/api.js'></script>
-                        <div class="g-recaptcha" data-sitekey="6Ldc9MAUAAAAAHSGo_kgd-bDgNIvmNwlcwmNLOet"></div>
-                        <br>
-
-                        {% buttons %}
-                            <button type="submit">Sign up</button>
-                        {% endbuttons %}
-                    </div>
-                </form>
-            </div>
+            <h2 style="text-align: center">Sign up</h2>
+            <hr style="width: 50%">
+            <form method="POST">
+                <div class="form-group" style="padding-left: 25%;padding-right: 25%">
+                    {% csrf_token %}
+                    {% bootstrap_form form %}
+                    <div class="g-recaptcha" data-sitekey="6Ldc9MAUAAAAAHSGo_kgd-bDgNIvmNwlcwmNLOet"></div>
+                    <br>
+                    {% buttons %}
+                        <button type="submit" class="btn btn-primary">Sign up</button>
+                    {% endbuttons %}
+                </div>
+            </form>
         </div>
     </div>
 {% endblock %}

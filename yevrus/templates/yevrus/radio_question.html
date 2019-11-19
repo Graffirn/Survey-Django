@@ -1,0 +1,23 @@
+<div class="form-group" id="qid{{ questionId }}">
+    <input type="hidden" class="question_type" value="1">
+    <div class="form-group">
+        <div class="col-sm-2" style="text-align:right">
+            <a class="col-sm-12 btn btn-primary disabled" role="button">Radio Question</a>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label" for="{{ questionId }}">Question</label>
+        <div class="col-sm-7">
+            <input type="text" class="form-control" id="{{ questionId }}" maxlength="255" value="{{ text }}" required>
+        </div>
+        <div class="col-sm-3">
+            <a type="button" class="btn btn-danger" onclick="delete_question('#qid{{ questionId }}', {{ questionId }})">Delete</a>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label" for="{{ questionId }}_options">Options</label>
+        <div class="col-sm-7">
+            <textarea class="form-control" id="{{ questionId }}_options" rows="2" required>{{ options }}</textarea>
+        </div>
+    </div>
+</div>

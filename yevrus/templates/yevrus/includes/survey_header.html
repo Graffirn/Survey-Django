@@ -1,0 +1,29 @@
+{% load staticfiles %}
+
+<div class="container">
+    <ul class="nav nav-pills" style="font-weight: bold; font-size: 18px;font-family: 'Open Sans', sans-serif;">
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'yevrus:dashboard' %}"><img alt="logo" class="top-logo" src="{% static 'yevrus/img/logo.png' %}"> Dashboard</a>
+        </li>
+        <li class="nav-item navbar-right">
+            <a class="nav-link" href="{% url 'yevrus:mysurveys' %}">My surveys</a>
+        </li>
+        <li class="nav-item navbar-right">
+            <a href="{% url 'yevrus:change_password' %}">
+                    <span class="glyphicon glyphicon-cog"></span>
+                Change Password
+            </a>
+        </li>
+        <li class="nav-item navbar-right">
+            <a href="{% url 'yevrus:logout' %}">
+                <span class="glyphicon glyphicon-log-out"></span>
+                Logout
+            </a>
+        </li>
+        <li class="nav-item navbar-right">
+            <a disabled="disabled">
+                Logined as {{ user.username }}
+            </a>
+        </li>
+    </ul>
+</div>

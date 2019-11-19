@@ -16,15 +16,14 @@
                     {% endif %}
                 {% endfor %}
             {% endif %}
-            <h2>Edit survey</h2>
+            <h2>Create new survey</h2>
             <div id="response-message"></div>
             <hr>
             <form class="form-horizontal">
                 <div class="form-group form-group-lg">
                     <label class="col-sm-1 control-label" for="survey-title">Title</label>
                     <div class="col-sm-9">
-                        <input type="text" class="form-control" id="survey-title" maxlength="255" value="{{ title }}"
-                               required>
+                        <input type="text" class="form-control" id="survey-title" maxlength="255" required>
                     </div>
                     <div class="col-sm-1">
                         <div class="btn-group">
@@ -43,19 +42,16 @@
                 <div class="form-group">
                     <div class="col-sm-1"></div>
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" {{ is_published }} id="is_published">
+                        <input class="form-check-input" type="checkbox" value="" id="is_published">
                         <label class="form-check-label" for="is_published">
                             Is published </label>
                     </div>
                 </div>
                 <div class="form-group form-group-lg" id="question_field">
-                    {% for question in questions %}
-                        {{ question }}
-                    {% endfor %}
                 </div>
                 <div class="form-group form-group-lg" id="control-btn">
                     <div class="col-sm-1">
-                        <button type="button" class="btn btn-success" onclick="createSurvey()">Save</button>
+                        <button type="button" class="btn btn-success" onclick="createSurvey()">Create</button>
                     </div>
                     <div class="col-sm-1">
                         <a type="button" class="btn btn-danger" href="{% url 'yevrus:mysurveys' %}">Back to my
@@ -69,8 +65,8 @@
 
 {% block script %}
     <script>
-        let questionId = {{ question_id }};
-        let listQuestions = {{ list_question_id }};
+        let questionId = 0;
+        let listQuestions = [];
         let survey = {};
 
         function add_question(type) {
@@ -142,6 +138,7 @@
                             </div>
                         </div>
                     </div>
+
             `;
 
             if (type === 0) {
@@ -162,8 +159,8 @@
         }
 
         function createSurvey() {
-            const success_message = `
-                <div class="alert alert-success" id="success-message" role="alert">Success</div>
+            const message = `
+                <div class="alert alert-success" id="success-message" role="alert">{0}</div>
             `;
             const error_message = `
                 <div class="alert alert-danger" id="error-message" role="alert">Ajax error! Please try again.</div>
@@ -183,13 +180,14 @@
                 prepare_data();
 
                 $.ajax({
-                    url: '{% url 'yevrus:editsurvey' key %}',
+                    url: '{% url 'yevrus:createsurveys' %}',
                     type: 'POST',
                     dataType: 'json',
                     data: survey,
                     success: function (resp) {
                         if (resp['message']) {
                             $("#response-message").html('<div class="alert alert-success" id="success-message" role="alert">' + resp['message'] + '</div>');
+                            $("#control-btn").html(new_control_btn);
                         } else {
                             $("#response-message").html(error_message);
                         }
@@ -223,7 +221,6 @@
                 if (question['type'] != 0) {
                     question['option'] = div.find("#" + listQuestions[i].toString() + "_options").val();
                 }
-
                 survey['question_' + i.toString()] = question;
             }
             console.log(survey);

@@ -1,17 +1,7 @@
 {% extends 'yevrus/includes/surveys_layout.html' %}
 
-{% load bootstrap4 %}
-
-{% block style %}
-    <style>
-        .invalid-feedback {
-            color: darkred;
-        }
-    </style>
-{% endblock %}
-
 {% block title %}
-    Change password
+    Survey
 {% endblock %}
 
 {% block content %}
@@ -26,17 +16,24 @@
                     {% endif %}
                 {% endfor %}
             {% endif %}
-            <h2 style="text-align: center">Change password</h2>
-            <hr style="width: 50%">
-            <form method="post">
+            <h2>{{ title }}</h2>
+            <hr>
+            <form method="POST" class="form-horizontal" action="{% url 'yevrus:surveyresponse' key %}">
                 <div class="form-group" style="padding-left: 25%;padding-right: 25%">
-                    {% csrf_token %}
-                    {% bootstrap_form form %}
-                    {% buttons %}
-                        <button type="submit" class="btn btn-primary">Save changes</button>
-                    {% endbuttons %}
-                </div>
+                    {% for field in form %}
+                        <div class="form-group">
+                            {{ field.errors }}
+                            <label class="control-label">{{ field.label }}</label>
+                            {{ field }}
+                        </div>
+                    {% endfor %}
+                    <input type=submit class="btn btn-primary" value="Submit">
             </form>
         </div>
     </div>
+    </div>
 {% endblock %}
+
+
+
+
