@@ -24,7 +24,9 @@ urlpatterns = [
     path('surveys/<survey_key>', views.surveyresponse, name='surveyresponse'),
     path('showresponse/<survey_key>', views.show_response, name='show_response'),
     path('showresponse/<survey_key>/<response_id>', views.show_response_id, name='show_response_id'),
-    path('get_result/<survey_key>', views.get_result, name='get_result'),
+    path('export/<survey_key>', views.export_to_xls, name='export_to_xls'),
+    path('get_chart/', views.get_chart, name='get_chart'),
+    path('get_statistics/<survey_key>', views.get_statistics, name='get_statistics'),
     path('archive/<survey_key>', views.archive_survey, name='archive_survey'),
     path('publish/<survey_key>', views.publish_survey, name='publish_survey'),
 ]

@@ -1,7 +1,11 @@
 {% extends 'yevrus/includes/layout.html' %}
 
 {% block body %}
-    {% include 'yevrus/includes/survey_header.html' %}
+    {% if user.username %}
+        {% include 'yevrus/includes/survey_header.html' %}
+    {% else %}
+        {% include 'yevrus/includes/home_header.html' %}
+    {% endif %}
 
     {% block content %}
     {% endblock %}

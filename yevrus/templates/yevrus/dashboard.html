@@ -19,23 +19,34 @@
             <h2>Survey list</h2>
             <hr>
             {% if latest_survey_list %}
-                <ol>
-                    {% for survey in latest_survey_list %}
-                        <li>
-                            <h3>{{ survey.title }}</h3>
-                            {% if survey in filled_survey_list %}
-                                <a type="button" class="btn btn-info"
-                                   href="{% url 'yevrus:show_response' survey.key %}">Review response</a>
-                            {% else %}
-                                <a type="button" class="btn btn-primary"
-                                   href="{% url 'yevrus:surveyresponse' survey.key %}">Answer</a>
-                            {% endif %}
-                        </li>
-                    {% endfor %}
-                </ol>
+                <div class="row">
+                {% for survey in latest_survey_list %}
+                    <div class="form-group col-sm-4">
+                    {% if survey in filled_survey_list %}
+                        <div class="panel panel-info">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">{{ survey.title }}</h3>
+                        </div>
+                        <div class="panel-body">
+                        <a type="button" class="btn btn-info"
+                           href="{% url 'yevrus:show_response' survey.key %}">Review response</a>
+                    {% else %}
+                        <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">{{ survey.title }}</h3>
+                        </div>
+                        <div class="panel-body">
+                        <a type="button" class="btn btn-primary"
+                           href="{% url 'yevrus:surveyresponse' survey.key %}">Answer</a>
+                    {% endif %}
+                </div>
+                </div>
+                </div>
+                {% endfor %}
+            </div>
             {% else %}
                 <p>No surveys are available.</p>
             {% endif %}
-        </div>
-    </div>
+            </div>
+            </div>
 {% endblock %}

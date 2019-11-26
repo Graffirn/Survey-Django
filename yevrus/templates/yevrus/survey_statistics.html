@@ -1,0 +1,170 @@
+{% extends 'yevrus/includes/surveys_layout.html' %}
+
+{% block title %}
+    Dashboard
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="jumbotron">
+            {% if messages %}
+                {% for message in messages %}
+                    {% if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
+                        <div class="alert alert-success" role="alert">{{ message }}</div>
+                    {% elif message.level ==  DEFAULT_MESSAGE_LEVELS.ERROR %}
+                        <div class="alert alert-danger" role="alert">{{ message }}</div>
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+            <h2>{{ name }}</h2>
+            <hr>
+            {% if response_count > 0 %}
+                <h3>Number of response: {{ response_count }}</h3>
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">User</th>
+                        <th scope="col">Submit Date</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for response in response_list %}
+                        <tr>
+                            <th scope="row">{{ forloop.counter }}</th>
+                            <td>{{ response.user }}</td>
+                            <td>{{ response.submit_date }}</td>
+                            <td><a type="button" class="btn btn-danger" id="res_{{ response.id }}"
+                                   href="/yevrus/showresponse/{{ key }}/{{ response.id }}">View</a></td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+                <div class="modal fade" id="chartModal" role="dialog">
+                    <div class="modal-dialog modal-lg">
+
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                <h3 class="modal-title">{{ name }}</h3>
+                            </div>
+                            <div class="modal-body" id="chartModalBody">
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <a type="button" class="btn btn-danger" href="{% url 'yevrus:mysurveys' %}">Back to my
+                    surveys</a>
+                <a type="button" class="btn btn-primary"
+                   href="{% url 'yevrus:export_to_xls' key %}">Export to XLS</a>
+                <button type="button" class="btn btn-info"
+                        onclick="get_chart('{% url 'yevrus:get_chart' %}')">Show chart
+                </button>
+            {% else %}
+                <p>This survey currently has no response.</p>
+                <a type="button" class="btn btn-danger" href="{% url 'yevrus:mysurveys' %}">Back to my
+                    surveys</a>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}
+
+{% block script %}
+    <script>
+        function get_chart(url) {
+            $.ajax({
+                url: url,
+                type: 'POST',
+                dataType: 'json',
+                data: {
+                    'key': '{{ key }}'
+                },
+                success: function (resp) {
+                    let html_text = "";
+                    if (resp['empty']) {
+                        html_text += "<p>This survey currently has no response.</p>\n";
+                        $('#chartModalBody').append(html_text);
+                    } else {
+                        for (let key in resp) {
+                            if (resp.hasOwnProperty(key)) {
+                                let response = resp[key];
+                                let chart_id = `chart${response['id_in_survey']}`;
+                                let type = 'horizontalBar';
+                                let has_legend = false;
+                                let scale = {
+                                    xAxes: [{
+                                        ticks: {
+                                            beginAtZero: true
+                                        },
+                                        gridLines: {
+                                            drawOnChartArea: false
+                                        }
+                                    }],
+                                    yAxes: [{
+                                        gridLines: {
+                                            drawOnChartArea: false
+                                        }
+                                    }]
+                                };
+                                if (response['type'] == '1') {
+                                    type = 'pie';
+                                    has_legend = true;
+                                    scale = null;
+                                }
+                                html_text = `<canvas id="${chart_id}"></canvas>`;
+                                console.log(response);
+                                $('#chartModalBody').append(html_text);
+                                let ctx = document.getElementById(chart_id).getContext('2d');
+                                let chart = new Chart(ctx, {
+                                    type: type,
+                                    data: {
+                                        labels: response['label'],
+                                        datasets: [{
+                                            backgroundColor: palette('cb-RdYlBu', response['label'].length).map(function (hex) {
+                                                return '#' + hex;
+                                            }),
+                                            data: response['data']
+                                        }]
+                                    },
+                                    options: {
+                                        responsive: true,
+                                        title: {
+                                            display: true,
+                                            text: response['title'],
+                                            position: 'bottom',
+                                            fontStyle: 'bold',
+                                            fontSize: 20,
+                                            fontFamily: 'Open Sans',
+                                        },
+                                        layout: {
+                                            padding: {
+                                                top: 0,
+                                                bottom: 15,
+                                                left: 15,
+                                                right: 15
+                                            }
+                                        },
+                                        legend: {
+                                            display: has_legend,
+                                            position: 'bottom',
+                                        },
+                                        scales: scale,
+                                    }
+                                });
+                            }
+                        }
+                    }
+                    $('#chartModal').modal('show');
+                },
+                error: function () {
+                }
+            });
+        }
+    </script>
+{% endblock %}

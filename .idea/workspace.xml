@@ -2,57 +2,31 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="08cc7895-d8ac-4d6b-8cb1-fc3182c9dce0" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/yevrus/templates/yevrus/create_surveys.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/yevrus/templates/yevrus/includes/home_header.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/yevrus/templates/yevrus/includes/home_layout.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/yevrus/templates/yevrus/includes/layout.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/yevrus/templates/yevrus/includes/survey_header.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/yevrus/templates/yevrus/includes/surveys_layout.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/yevrus/templates/yevrus/multichoice_question.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/yevrus/templates/yevrus/radio_question.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/yevrus/templates/yevrus/survey_response.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/yevrus/templates/yevrus/text_question.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/yevrus/migrations/0002_auto_20191117_2124.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/yevrus/migrations/0003_response_submit_date.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/yevrus/migrations/0004_auto_20191118_2305.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/yevrus/migrations/0005_survey_is_done.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/yevrus/migrations/0006_auto_20191119_1607.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/yevrus/static/yevrus/img/name.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/yevrus/templates/yevrus/survey_statistics.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/yevrus/templates/yevrus/unavailable_survey.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/yevrus/xls_sheet_handle.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/survey/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/survey/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/yevrus/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/yevrus/admin.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/yevrus/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/yevrus/forms.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/yevrus/migrations/0001_initial.py" beforeDir="false" afterPath="$PROJECT_DIR$/yevrus/migrations/0001_initial.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/yevrus/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/yevrus/models.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/yevrus/static/yevrus/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/yevrus/static/yevrus/css/style.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/yevrus/static/yevrus/img/Logo.png" beforeDir="false" afterPath="$PROJECT_DIR$/yevrus/static/yevrus/img/Logo.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/yevrus/static/yevrus/img/logo_green.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/yevrus/templates/registration/password_reset_complete.html" beforeDir="false" afterPath="$PROJECT_DIR$/yevrus/templates/registration/password_reset_complete.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/yevrus/templates/registration/password_reset_confirm.html" beforeDir="false" afterPath="$PROJECT_DIR$/yevrus/templates/registration/password_reset_confirm.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/yevrus/templates/registration/password_reset_done.html" beforeDir="false" afterPath="$PROJECT_DIR$/yevrus/templates/registration/password_reset_done.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/yevrus/templates/registration/password_reset_email.html" beforeDir="false" afterPath="$PROJECT_DIR$/yevrus/templates/registration/password_reset_email.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/yevrus/templates/registration/password_reset_form.html" beforeDir="false" afterPath="$PROJECT_DIR$/yevrus/templates/registration/password_reset_form.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/yevrus/templates/yevrus/account_active_email.html" beforeDir="false" afterPath="$PROJECT_DIR$/yevrus/templates/yevrus/account_active_email.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/yevrus/templates/yevrus/change_password.html" beforeDir="false" afterPath="$PROJECT_DIR$/yevrus/templates/yevrus/change_password.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/yevrus/templates/yevrus/chart.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/yevrus/templates/yevrus/createchoice.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/yevrus/templates/yevrus/createpolls.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/yevrus/templates/yevrus/createsurveys.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/yevrus/templates/yevrus/create_surveys.html" beforeDir="false" afterPath="$PROJECT_DIR$/yevrus/templates/yevrus/create_surveys.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/yevrus/templates/yevrus/dashboard.html" beforeDir="false" afterPath="$PROJECT_DIR$/yevrus/templates/yevrus/dashboard.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/yevrus/templates/yevrus/dashboardlayout.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/yevrus/templates/yevrus/editchoice.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/yevrus/templates/yevrus/editpoll.html" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/yevrus/templates/yevrus/editsurvey.html" beforeDir="false" afterPath="$PROJECT_DIR$/yevrus/templates/yevrus/editsurvey.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/yevrus/templates/yevrus/home.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/yevrus/templates/yevrus/includes/dashboardheader.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/yevrus/templates/yevrus/includes/header.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/yevrus/templates/yevrus/includes/surveyheader.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/yevrus/templates/yevrus/layout.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/yevrus/templates/yevrus/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/yevrus/templates/yevrus/login.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/yevrus/templates/yevrus/mypolls.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/yevrus/templates/yevrus/mysurveys.html" beforeDir="false" afterPath="$PROJECT_DIR$/yevrus/templates/yevrus/my_surveys.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/yevrus/templates/yevrus/register.html" beforeDir="false" afterPath="$PROJECT_DIR$/yevrus/templates/yevrus/register.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/yevrus/templates/yevrus/showresponders.html" beforeDir="false" afterPath="$PROJECT_DIR$/yevrus/templates/yevrus/showresponders.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/yevrus/templates/yevrus/showresponse.html" beforeDir="false" afterPath="$PROJECT_DIR$/yevrus/templates/yevrus/show_response.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/yevrus/templates/yevrus/surveyresponse.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/yevrus/templates/yevrus/surveys.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/yevrus/templates/yevrus/surveyslayout.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/yevrus/templates/yevrus/vote.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/yevrus/templates/yevrus/includes/layout.html" beforeDir="false" afterPath="$PROJECT_DIR$/yevrus/templates/yevrus/includes/layout.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/yevrus/templates/yevrus/includes/surveys_layout.html" beforeDir="false" afterPath="$PROJECT_DIR$/yevrus/templates/yevrus/includes/surveys_layout.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/yevrus/templates/yevrus/multichoice_question.html" beforeDir="false" afterPath="$PROJECT_DIR$/yevrus/templates/yevrus/multichoice_question.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/yevrus/templates/yevrus/my_surveys.html" beforeDir="false" afterPath="$PROJECT_DIR$/yevrus/templates/yevrus/my_surveys.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/yevrus/templates/yevrus/radio_question.html" beforeDir="false" afterPath="$PROJECT_DIR$/yevrus/templates/yevrus/radio_question.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/yevrus/templates/yevrus/show_response.html" beforeDir="false" afterPath="$PROJECT_DIR$/yevrus/templates/yevrus/show_response.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/yevrus/templates/yevrus/showresponders.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/yevrus/templates/yevrus/survey_response.html" beforeDir="false" afterPath="$PROJECT_DIR$/yevrus/templates/yevrus/survey_response.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/yevrus/templates/yevrus/text_question.html" beforeDir="false" afterPath="$PROJECT_DIR$/yevrus/templates/yevrus/text_question.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/yevrus/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/yevrus/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/yevrus/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/yevrus/views.py" afterDir="false" />
     </list>
@@ -69,8 +43,8 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="CSS File" />
-        <option value="Python Script" />
         <option value="HTML File" />
+        <option value="Python Script" />
       </list>
     </option>
   </component>
@@ -82,6 +56,7 @@
     <ConfirmationsSetting value="2" id="Add" />
   </component>
   <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
@@ -147,8 +122,32 @@
       <workItem from="1572714278888" duration="2749000" />
       <workItem from="1572865090421" duration="21221000" />
       <workItem from="1573813660048" duration="62560000" />
-      <workItem from="1574074413402" duration="47592000" />
+      <workItem from="1574074413402" duration="48191000" />
+      <workItem from="1574608349872" duration="5780000" />
+      <workItem from="1574662673164" duration="46832000" />
     </task>
+    <task id="LOCAL-00001" summary="Ready for demo">
+      <created>1574156338050</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1574156338050</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Ready for demo">
+      <created>1574156800288</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1574156800288</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Ready for demo">
+      <created>1574156820888</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1574156820888</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -167,12 +166,16 @@
       </map>
     </option>
   </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Ready for demo" />
+    <option name="LAST_COMMIT_MESSAGE" value="Ready for demo" />
+  </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/yevrus/views.py</url>
-          <line>187</line>
+          <line>194</line>
           <option name="timeStamp" value="1" />
         </line-breakpoint>
       </breakpoints>

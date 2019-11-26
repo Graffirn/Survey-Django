@@ -26,168 +26,162 @@
                 <div class="form-group" style="padding-left: 15px">
                     <h3>Published surveys</h3>
                     {% if publish_survey_list %}
-                        <ol>
+                        <div class="row">
                             {% for survey in publish_survey_list %}
-                                <li>
-                                    <h4>{{ survey.title }}</h4>
-                                    <div class="form-group">
-                                        <a type="button" class="btn btn-danger"
-                                           href="{% url 'yevrus:deletesurvey' survey.key %}">
-                                            Delete
-                                        </a>
-                                        <button type="button" class="btn btn-info"
-                                                onclick="get_result('{% url 'yevrus:get_result' survey.key %}')">Check
-                                            result
-                                        </button>
-                                        <button type="button" class="btn btn-primary" data-toggle="modal"
-                                                data-target="#linkModal">
-                                            Get Link Survey
-                                        </button>
-                                        <a type="button" class="btn btn-warning"
-                                           href="{% url 'yevrus:archive_survey' survey.key %}">Archive
-                                        </a>
-                                    </div>
-                                    <div class="modal fade" id="linkModal" tabindex="-1" role="dialog"
-                                         aria-labelledby="linkModalLabel"
-                                         aria-hidden="true">
-                                        <div class="modal-dialog modal-dialog-centered" role="document">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title" id="linkModalLabel"><b>Share link</b></h5>
-                                                </div>
-                                                <div class="modal-body" style="padding-right: 10%; padding-left: 10%">
-                                                    <div class="row">
-                                                        <div class="col-sm-1" style="">
-                                                            <label class="control-label"
-                                                                   for="link-survey{{ survey.id }}">Link</label>
+                                <div class="form-group col-sm-6">
+                                    <div class="panel panel-primary">
+                                        <div class="panel-heading">
+                                            <h3 class="panel-title">{{ survey.title }}</h3>
+                                        </div>
+                                        <div class="panel-body">
+                                            <div class="form-group">
+                                                <a type="button" class="btn btn-danger"
+                                                   href="{% url 'yevrus:deletesurvey' survey.key %}">
+                                                    Delete
+                                                </a>
+                                                <a type="button" class="btn btn-info"
+                                                   href="{% url 'yevrus:get_statistics' survey.key %}">Check
+                                                    result
+                                                </a>
+                                                <button type="button" class="btn btn-primary" data-toggle="modal"
+                                                        data-target="#linkModal{{ survey.pk }}">
+                                                    Get Link Survey
+                                                </button>
+                                                <a type="button" class="btn btn-warning"
+                                                   href="{% url 'yevrus:archive_survey' survey.key %}">Archive
+                                                </a>
+                                            </div>
+                                            <div class="modal fade" id="linkModal{{ survey.id }}" tabindex="-1"
+                                                 role="dialog"
+                                                 aria-labelledby="linkModalLabel"
+                                                 aria-hidden="true">
+                                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="linkModalLabel{{ survey.id }}">
+                                                                <b>Share
+                                                                    link</b></h5>
                                                         </div>
-                                                        <div class="col-sm-11">
-                                                            <input type="text" class="form-control"
-                                                                   id="link-survey{{ survey.id }}"
-                                                                   maxlength="255" required
-                                                                   value="{{ request.get_host }}{% url 'yevrus:surveyresponse' survey.key %}">
+                                                        <div class="modal-body"
+                                                             style="padding-right: 10%; padding-left: 10%">
+                                                            <div class="row">
+                                                                <div class="col-sm-1" style="">
+                                                                    <label class="control-label"
+                                                                           for="link-survey{{ survey.id }}">Link</label>
+                                                                </div>
+                                                                <div class="col-sm-11">
+                                                                    <input type="text" class="form-control"
+                                                                           id="link-survey{{ survey.id }}"
+                                                                           maxlength="255" required
+                                                                           value="{{ request.get_host }}{% url 'yevrus:surveyresponse' survey.key %}">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-success"
+                                                                    onclick="copy('link-survey{{ survey.id }}')">Copy
+                                                            </button>
+
+                                                            <button type="button" class="btn btn-danger"
+                                                                    data-dismiss="modal">Close
+                                                            </button>
                                                         </div>
                                                     </div>
-
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-success"
-                                                            onclick="copy('link-survey{{ survey.id }}')">Copy
-                                                    </button>
-
-                                                    <button type="button" class="btn btn-danger"
-                                                            data-dismiss="modal">Close
-                                                    </button>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="modal fade" id="responseModal" tabindex="-1" role="dialog"
-                                         aria-labelledby="responseModalLabel"
-                                         aria-hidden="true">
-                                        <div class="modal-dialog modal-dialog-centered" role="document">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title" id=""><b>Response list</b>
-                                                    </h5>
-                                                </div>
-                                                <div class="modal-body" id="responseModalBody"
-                                                     style="padding-right: 10%; padding-left: 10%">
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </li>
+                                </div>
                             {% endfor %}
-                        </ol>
+                        </div>
                     {% endif %}
                 </div>
-                <br>
                 <hr style="margin-left: 30px">
                 <div class="form-group" style="padding-left: 15px">
                     <h3>Unpublished surveys</h3>
                     {% if private_survey_list %}
-                        <ol>
+                        <div class="row">
                             {% for survey in private_survey_list %}
-                                <li>
-                                    <h4>{{ survey.title }}</h4>
-                                    <div class="form-group">
-                                        <a type="button" class="btn btn-danger"
-                                           href="{% url 'yevrus:deletesurvey' survey.key %}">
-                                            Delete
-                                        </a>
-                                        <a type="button" class="btn btn-primary"
-                                           href="{% url 'yevrus:editsurvey' survey.key %}">Edit
-                                        </a>
-                                        <a type="button" class="btn btn-warning"
-                                           href="{% url 'yevrus:publish_survey' survey.key %}">Publish
-                                        </a>
+                                <div class="form-group col-sm-6">
+                                    <div class="panel panel-danger">
+                                        <div class="panel-heading">
+                                            <h3 class="panel-title">{{ survey.title }}</h3>
+                                        </div>
+                                        <div class="panel-body">
+                                            <div class="form-group">
+                                                <a type="button" class="btn btn-danger"
+                                                   href="{% url 'yevrus:deletesurvey' survey.key %}">
+                                                    Delete
+                                                </a>
+                                                <a type="button" class="btn btn-primary"
+                                                   href="{% url 'yevrus:editsurvey' survey.key %}">Edit
+                                                </a>
+                                                <a type="button" class="btn btn-warning"
+                                                   href="{% url 'yevrus:publish_survey' survey.key %}">Publish
+                                                </a>
+                                            </div>
+                                        </div>
                                     </div>
-                                </li>
+                                </div>
                             {% endfor %}
-                        </ol>
+                        </div>
                     {% endif %}
                 </div>
-                <br>
                 <hr style="margin-left: 30px">
                 <div class="form-group" style="padding-left: 15px">
                     <h3>Filled surveys</h3>
                     {% if filled_survey_list %}
-                        <ol>
+                        <div class="row">
                             {% for survey in filled_survey_list %}
-                                <li>
-                                    <h4>{{ survey.title }}</h4>
-                                    <div class="form-group">
-                                        <a type="button" class="btn btn-info"
-                                           href="{% url 'yevrus:show_response' survey.key %}">
-                                            Review Response
-                                        </a>
+                                <div class="form-group col-sm-6">
+                                    <div class="panel panel-info">
+                                        <div class="panel-heading">
+                                            <h3 class="panel-title">{{ survey.title }}</h3>
+                                        </div>
+                                        <div class="panel-body">
+                                            <div class="form-group">
+                                                <a type="button" class="btn btn-info"
+                                                   href="{% url 'yevrus:show_response' survey.key %}">
+                                                    Review Response
+                                                </a>
+                                            </div>
+                                        </div>
                                     </div>
-                                </li>
+                                </div>
                             {% endfor %}
-                        </ol>
+                        </div>
                     {% endif %}
                 </div>
-                <br>
                 <hr style="margin-left: 30px">
                 <div class="form-group" style="padding-left: 15px">
                     <h3>Archived surveys</h3>
                     {% if done_survey_list %}
-                        <ol>
+                        <div class="row">
                             {% for survey in done_survey_list %}
-                                <li>
-                                    <h4>{{ survey.title }}</h4>
-                                    <div class="form-group">
-                                        <a type="button" class="btn btn-danger"
-                                           href="{% url 'yevrus:deletesurvey' survey.key %}">
-                                            Delete
-                                        </a>
-                                        <button type="button" class="btn btn-info"
-                                                onclick="get_result('{% url 'yevrus:get_result' survey.key %}')">Check
-                                            result
-                                        </button>
-                                        <a type="button" class="btn btn-warning"
-                                           href="{% url 'yevrus:archive_survey' survey.key %}">Unarchive
-                                        </a>
-                                    </div>
-                                    <div class="modal fade" id="responseModal" tabindex="-1" role="dialog"
-                                         aria-labelledby="responseModalLabel"
-                                         aria-hidden="true">
-                                        <div class="modal-dialog modal-dialog-centered" role="document">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title" id=""><b>Response list</b>
-                                                    </h5>
-                                                </div>
-                                                <div class="modal-body" id="responseModalBody"
-                                                     style="padding-right: 10%; padding-left: 10%">
-                                                </div>
+                                <div class="form-group col-sm-6">
+                                    <div class="panel panel-warning">
+                                        <div class="panel-heading">
+                                            <h3 class="panel-title">{{ survey.title }}</h3>
+                                        </div>
+                                        <div class="panel-body">
+                                            <div class="form-group">
+                                                <a type="button" class="btn btn-danger"
+                                                   href="{% url 'yevrus:deletesurvey' survey.key %}">
+                                                    Delete
+                                                </a>
+                                                <a type="button" class="btn btn-info"
+                                                   href="{% url 'yevrus:get_statistics' survey.key %}">Check
+                                                    result
+                                                </a>
+                                                <a type="button" class="btn btn-warning"
+                                                   href="{% url 'yevrus:archive_survey' survey.key %}">Unarchive
+                                                </a>
                                             </div>
                                         </div>
                                     </div>
-                                </li>
+                                </div>
                             {% endfor %}
-                        </ol>
+                        </div>
                     {% endif %}
                 </div>
             {% endif %}
@@ -204,38 +198,6 @@
             copyText.select();
             copyText.setSelectionRange(0, 99999);
             document.execCommand("copy");
-        }
-
-        function get_result(url) {
-            $.ajax({
-                url: url,
-                type: 'POST',
-                dataType: 'json',
-                data: {},
-                success: function (resp) {
-                    let html_text = "";
-                    if (resp.length == 0) {
-                        html_text += "This survey currently have no response.";
-                    } else {
-                        let survey_key = resp['key'];
-                        delete resp['key'];
-                        for (let key in resp) {
-                            if (resp.hasOwnProperty(key)) {
-                                let response = resp[key];
-                                html_text += `<a type="button" class="btn btn-danger" id="res_${response['id']}" href="/yevrus/showresponse/${survey_key}/${response['id']}">View</a>
-                                    <label class="control-label" for="res_${response['id']}">${response['user']}</label>
-                                    <hr>
-                                `;
-
-                            }
-                        }
-                    }
-                    $('#responseModalBody').append(html_text);
-                    $('#responseModal').modal('show');
-                },
-                error: function () {
-                }
-            });
         }
     </script>
 {% endblock %}

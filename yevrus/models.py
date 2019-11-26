@@ -19,6 +19,8 @@ class Survey(models.Model):
     title = models.CharField(max_length=255)
     is_published = models.BooleanField(null=False, default=False)
     is_done = models.BooleanField(null=False, default=False)
+    publish_date = models.DateTimeField(null=True)
+    end_date = models.DateTimeField(null=True)
 
     def __init__(self, *args, **kwargs):
         super(Survey, self).__init__(*args, **kwargs)
@@ -29,6 +31,12 @@ class Survey(models.Model):
 
     def publish(self):
         self.is_published = True
+
+    def get_is_publish(self):
+        return self.publish_date > timezone.now()
+
+    def get_is_end(self):
+        return self.end_date > timezone.now()
 
     def done(self):
         self.is_done = True
@@ -56,7 +64,7 @@ class Choice(models.Model):
 
 class Response(models.Model):
     survey = models.ForeignKey(Survey, on_delete=models.CASCADE)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     submit_date = models.DateTimeField()
 
     def __init__(self, *args, **kwargs):

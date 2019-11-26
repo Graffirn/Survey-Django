@@ -1,5 +1,8 @@
 import requests
+import xlwt
+import ast
 
+from yevrus.xls_sheet_handle import FitSheetWrapper
 from django.conf import settings
 from django.core.mail import EmailMessage
 from django.urls import reverse
@@ -168,7 +171,11 @@ def createsurveys(request):
                 question_id = request.POST.get('question_%s[id_in_survey]' % i)
                 question_type = request.POST.get('question_%s[type]' % i)
                 question_text = request.POST.get('question_%s[text]' % i)
-                question_option = request.POST.get('question_%s[option]' % i).split('\n')
+                question_option_raw = request.POST.get('question_%s[option]' % i).split('\n')
+                question_option = []
+                for option in question_option_raw:
+                    if option:
+                        question_option.append(option)
                 question = survey.question_set.create(id_in_survey=question_id, type=question_type, title=question_text)
                 question.save()
                 if question_type != '0':
@@ -200,7 +207,11 @@ def editsurvey(request, survey_key):
                 question_id = request.POST.get('question_%s[id_in_survey]' % i)
                 question_type = request.POST.get('question_%s[type]' % i)
                 question_text = request.POST.get('question_%s[text]' % i)
-                question_option = request.POST.get('question_%s[option]' % i).split('\n')
+                question_option_raw = request.POST.get('question_%s[option]' % i).split('\n')
+                question_option = []
+                for option in question_option_raw:
+                    if option:
+                        question_option.append(option)
                 question = survey.question_set.create(id_in_survey=question_id, type=question_type, title=question_text)
                 question.save()
                 if question_type != '0':
@@ -255,10 +266,15 @@ def deletesurvey(request, survey_key):
     return redirect('yevrus:mysurveys')
 
 
-@login_required(login_url='/yevrus/')
+# @login_required(login_url='/yevrus/')
 def surveyresponse(request, survey_key):
-    user = request.user
+    user = None
+    if not request.user.is_anonymous:
+        user = request.user
     survey = get_object_or_404(Survey, key=survey_key)
+    if not survey.is_published or survey.is_done:
+        return render(request, 'yevrus/unavailable_survey.html')
+
     context = {'title': survey.title,
                'key': survey.key}
 
@@ -298,17 +314,123 @@ def show_response(request, survey_key):
 
 
 @login_required(login_url='/yevrus/')
-def get_result(request, survey_key):
+def export_to_xls(request, survey_key):
+    survey = get_object_or_404(Survey, key=survey_key)
+    response = HttpResponse(content_type='application/ms-excel')
+    response['Content-Disposition'] = 'attachment; filename="survey_data.xls"'
+
+    wb = xlwt.Workbook(encoding='utf-8')
+    ws = FitSheetWrapper(wb.add_sheet('Data'))
+
+    font_style = xlwt.XFStyle()
+    font_style.font.bold = True
+
+    questions_set = survey.question_set.all()
+    ws.write(0, 0, "Name", font_style)
+    ws.write(0, 1, survey.title, font_style)
+    ws.write(1, 0, "Time", font_style)
+    ws.write(1, 1, str(timezone.localtime(timezone.now())), font_style)
+
+    choice_list = []
+    col_name = ['#', 'Username', 'Submit Date']
+
+    for question in questions_set:
+        col_name.append(question.title)
+        choice_set = question.choice_set.all()
+        if not choice_set:
+            choice_list.append([])
+        else:
+            choice_list.append([c.label for c in choice_set])
+
+    for col_num in range(len(col_name)):
+        ws.write(2, col_num, col_name[col_num], font_style)
+
+    row_num = 3
+    font_style = xlwt.XFStyle()
+
+    response_set = survey.response_set.all().order_by('submit_date')
+    for i, res in enumerate(response_set):
+        answer_set = res.answer_set.all().order_by('id_in_response')
+        username = res.user.username if res.user else 'Anonymous'
+        col_value = [i, username, str(res.submit_date)]
+        for answer in answer_set:
+            if answer.type == '0':
+                col_value.append(answer.answer)
+            elif answer.type == '1':
+                converted_answer = ast.literal_eval(answer.answer)
+                col_value.append(choice_list[answer.id_in_response][converted_answer])
+            elif answer.type == '2':
+                ans = []
+                for a in ast.literal_eval(answer.answer):
+                    ans.append(choice_list[answer.id_in_response][ast.literal_eval(a)])
+                col_value.append(', '.join(ans))
+
+        for col_num in range(len(col_value)):
+            ws.write(row_num, col_num, col_value[col_num], font_style)
+        row_num += 1
+
+    wb.save(response)
+    return response
+
+
+@login_required(login_url='/yevrus/')
+def get_chart(request):
+    if request.method == 'POST':
+        survey = get_object_or_404(Survey, key=request.POST.get('key'))
+
+        questions_set = survey.question_set.all()
+
+        chart_data = {}
+
+        for question in questions_set:
+            choice_list = []
+            choice_count = []
+            if question.type != '0':
+                question_dict = {
+                    'id_in_survey': question.id_in_survey,
+                    'title': question.title,
+                    'type': question.type,
+                    'label': choice_list,
+                    'data': choice_count,
+                }
+                choice_set = question.choice_set.all()
+                for choice in choice_set:
+                    choice_list.append(choice.label)
+                    choice_count.append(0)
+                chart_data[question.id_in_survey] = question_dict
+
+        response_set = survey.response_set.all()
+        if not chart_data:
+            return JsonResponse({'empty': True})
+
+        for i, res in enumerate(response_set):
+            answer_set = res.answer_set.all()
+            for answer in answer_set:
+                if answer.type == '1':
+                    converted_answer = ast.literal_eval(answer.answer)
+                    chart_data[answer.id_in_response]['data'][converted_answer] += 1
+                elif answer.type == '2':
+                    for choice in ast.literal_eval(answer.answer):
+                        chart_data[answer.id_in_response]['data'][ast.literal_eval(choice)] += 1
+        return JsonResponse(chart_data)
+    return redirect('yevrus:dashboard')
+
+
+@login_required(login_url='/yevrus/')
+def get_statistics(request, survey_key):
     survey = get_object_or_404(Survey, key=survey_key)
     response_set = survey.response_set.all().order_by('submit_date')
-    if request.method == 'POST':
-        context = {'key': survey_key}
-        for i, response in enumerate(response_set):
-            response_info = {'id': response.id, 'user': response.user.username}
-            context[str(i)] = response_info
-        return JsonResponse(context)
-    else:
-        return redirect('yevrus:dashboard')
+    response_list = []
+    context = {'key': survey_key,
+               'name': survey.title,
+               'response_count': len(response_set),
+               'response_list': response_list,
+               }
+    for i, response in enumerate(response_set):
+        response_info = {'id': response.id, 'submit_date': response.submit_date,
+                         'user': 'Anonymous' if not response.user else response.user.username}
+        response_list.append(response_info)
+    return render(request, 'yevrus/survey_statistics.html', context)
 
 
 @login_required(login_url='/yevrus/')

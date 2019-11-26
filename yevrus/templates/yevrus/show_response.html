@@ -1,4 +1,6 @@
 {% extends 'yevrus/includes/surveys_layout.html' %}
+{% load bootstrap4 %}
+{% load widget_tweaks %}
 
 {% block title %}
     Response
@@ -9,12 +11,38 @@
     <div class="jumbotron">
         <h2>{{ title }}</h2>
         <hr>
-        <div class="form-group" style="padding-left: 25%;padding-right: 25%">
+        <div class="form-group" style="padding-left: 15%;padding-right: 15%">
             {% for field in form %}
                 <div class="form-group">
                     {{ field.errors }}
-                    <label class="control-label">{{ field.label }}</label>
-                    {{ field }}
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">{{ field.label }}</h3>
+                        </div>
+                        <div class="panel-body">
+                            {% if field.field.widget.input_type == 'text' %}
+                                {% render_field field class="form-control" %}
+                            {% elif field.field.widget.input_type == 'radio' %}
+                                <div class="funkyradio">
+                                    {% for radio in field %}
+                                        <div class="funkyradio-info">
+                                            {{ radio.tag }}
+                                            <label for="{{ radio.id_for_label }}">{{ radio.choice_label }}</label>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            {% elif field.field.widget.input_type == 'checkbox' %}
+                                <div class="funkyradio">
+                                    {% for checkbox in field %}
+                                        <div class="funkyradio-danger">
+                                            {{ checkbox.tag }}
+                                            <label for="{{ checkbox.id_for_label }}">{{ checkbox.choice_label }}</label>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
                 </div>
             {% endfor %}
             <a type="button" class="btn btn-info"

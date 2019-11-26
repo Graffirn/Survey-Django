@@ -20,35 +20,35 @@
             <div id="response-message"></div>
             <hr>
             <form class="form-horizontal">
-                <div class="form-group form-group-lg">
-                    <label class="col-sm-1 control-label" for="survey-title">Title</label>
-                    <div class="col-sm-9">
-                        <input type="text" class="form-control" id="survey-title" maxlength="255" value="{{ title }}"
-                               required>
-                    </div>
-                    <div class="col-sm-1">
-                        <div class="btn-group">
-                            <button type="button" class="btn btn-lg btn-primary dropdown-toggle" data-toggle="dropdown"
-                                    aria-haspopup="true" aria-expanded="false">
-                                Add question
-                            </button>
-                            <div class="dropdown-menu">
-                                <a class="dropdown-item col-sm-12" onclick="add_question(0)">Text</a>
-                                <a class="dropdown-item col-sm-12" onclick="add_question(1)">Radio</a>
-                                <a class="dropdown-item col-sm-12" onclick="add_question(2)">Multichoice</a>
+                <div class="form-group form-group-lg" style="padding-left: 5%; padding-right: 5%">
+                    <div class="form-group">
+                        <div class="col-sm-10">
+                            <div class="input-group input-group-lg">
+                                <label class="input-group-addon" for="survey-title"><b>Title</b></label>
+                                <input type="text" class="form-control" id="survey-title" maxlength="255" value="{{ title }}" required>
+                            </div>
+                        </div>
+                        <div class="col-sm-2" style="padding: 15px 0; text-align: center">
+                            <input type="checkbox" name="checkbox" {{ is_published }} id="is_published">
+                            <label for="is_published" style="font-size: 18px">Publish</label>
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-lg btn-primary dropdown-toggle"
+                                        data-toggle="dropdown"
+                                        aria-haspopup="true" aria-expanded="false">
+                                    Add question
+                                </button>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item col-sm-12" onclick="add_question(0)">Text</a>
+                                    <a class="dropdown-item col-sm-12" onclick="add_question(1)">Radio</a>
+                                    <a class="dropdown-item col-sm-12" onclick="add_question(2)">Multichoice</a>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="form-group">
-                    <div class="col-sm-1"></div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" {{ is_published }} id="is_published">
-                        <label class="form-check-label" for="is_published">
-                            Is published </label>
-                    </div>
-                </div>
-                <div class="form-group form-group-lg" id="question_field">
+                <div class="form-group form-group-lg" id="question_field" style="padding-left: 5%; padding-right: 5%">
                     {% for question in questions %}
                         {{ question }}
                     {% endfor %}
@@ -75,71 +75,86 @@
 
         function add_question(type) {
             const text_question = `
-                    <div class="form-group" id="qid${questionId}">
-                        <input type="hidden" class="question_type" value="0">
-                        <div class="form-group">
-                            <div class="col-sm-2" style="text-align:right">
-                                <a class="col-sm-12 btn btn-primary disabled" role="button">Text Question</a>
+                    <div class="form-group" id="qid${questionId}" style="padding-left: 15px; padding-right: 15px">
+                        <div class="panel panel-info">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">Text Question</h3>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label" for="${questionId}">Question</label>
-                            <div class="col-sm-7">
-                                <input type="text" class="form-control" id="${questionId}" maxlength="255" required>
+                            <div class="panel-body">
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label" for="${questionId}">Question</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control" id="${questionId}" maxlength="255" required>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <a type="button" class="btn btn-danger"
+                                            onclick="delete_question('#qid${questionId}', ${questionId})">Delete</a>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="col-sm-3">
-                                <a type="button" class="btn btn-danger" onclick="delete_question('#qid${questionId}', ${questionId})">Delete</a>
-                            </div>
+                            <input type="hidden" class="question_type" value="0">
                         </div>
                     </div>
             `;
             const radio_question = `
-                    <div class="form-group" id="qid${questionId}">
-                        <input type="hidden" class="question_type" value="1">
-                        <div class="form-group">
-                            <div class="col-sm-2" style="text-align:right">
-                                <a class="col-sm-12 btn btn-primary disabled" role="button">Radio Question</a>
+                    <div class="form-group" id="qid${questionId}" style="padding-left: 15px; padding-right: 15px">
+                        <div class="panel panel-warning">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">Radio Question</h3>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label" for="${questionId}">Question</label>
-                            <div class="col-sm-7">
-                                <input type="text" class="form-control" id="${questionId}" maxlength="255" required>
+                            <div class="panel-body">
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label" for="${questionId}">Question</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control" id="${questionId}" maxlength="255"
+                                               required>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <a type="button" class="btn btn-danger"
+                                           onclick="delete_question('#qid${questionId}', ${questionId})">Delete</a>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label" for="${questionId}_options">Options</label>
+                                    <div class="col-sm-8">
+                                        <small style="color: #00838f">Each line in textarea corresponds to one choice</small>
+                                        <textarea class="form-control" id="${questionId}_options" rows="2"
+                                                  required></textarea>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="col-sm-3">
-                                <a type="button" class="btn btn-danger" onclick="delete_question('#qid${questionId}', ${questionId})">Delete</a>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label" for="${questionId}_options">Options</label>
-                            <div class="col-sm-7">
-                                <textarea class="form-control" id="${questionId}_options" rows="2" required></textarea>
-                            </div>
+                            <input type="hidden" class="question_type" value="1">
                         </div>
                     </div>
             `;
             const multichoice_question = `
-                    <div class="form-group" id="qid${questionId}">
-                        <input type="hidden" class="question_type" value="2">
-                        <div class="form-group">
-                            <div class="col-sm-2" style="text-align:right">
-                                <a class="col-sm-12 btn btn-primary disabled" role="button">Multichoice Question</a>
+                    <div class="form-group" id="qid${questionId}" style="padding-left: 15px; padding-right: 15px">
+                        <div class="panel panel-danger">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">Multichoice Question</h3>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label" for="${questionId}">Question</label>
-                            <div class="col-sm-7">
-                                <input type="text" class="form-control" id="${questionId}" maxlength="255" required>
+                            <div class="panel-body">
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label" for="${questionId}">Question</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control" id="${questionId}" maxlength="255"
+                                               required>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <a type="button" class="btn btn-danger"
+                                           onclick="delete_question('#qid${questionId}', ${questionId})">Delete</a>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label" for="${questionId}_options">Options</label>
+                                    <div class="col-sm-8">
+                                        <small style="color: #00838f">Each line in textarea corresponds to one choice</small>
+                                        <textarea class="form-control" id="${questionId}_options" rows="4"
+                                                  required></textarea>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="col-sm-3">
-                                <a type="button" class="btn btn-danger" onclick="delete_question('#qid${questionId}', ${questionId})">Delete</a>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label" for="${questionId}_options">Options</label>
-                            <div class="col-sm-7">
-                                <textarea class="form-control" id="${questionId}_options" rows="4" required></textarea>
-                            </div>
+                            <input type="hidden" class="question_type" value="2">
                         </div>
                     </div>
             `;
@@ -218,10 +233,10 @@
                 let div = $("#qid" + listQuestions[i].toString());
                 question['id_in_survey'] = i;
                 question['type'] = div.find(".question_type").val();
-                question['text'] = div.find("#" + listQuestions[i].toString()).val();
+                question['text'] = div.find("#" + listQuestions[i].toString()).val().replace(/(?:(?:\r\n|\r|\n)\s*){2}/gm, "\n");
                 question['option'] = "";
                 if (question['type'] != 0) {
-                    question['option'] = div.find("#" + listQuestions[i].toString() + "_options").val();
+                    question['option'] = div.find("#" + listQuestions[i].toString() + "_options").val().replace(/(?:(?:\r\n|\r|\n)\s*){2}/gm, "\n");
                 }
 
                 survey['question_' + i.toString()] = question;
