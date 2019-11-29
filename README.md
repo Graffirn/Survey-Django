@@ -17,10 +17,3 @@
     mysql -u username -p survey < survey.sql;
     ```
     Change ```USER``` and ```PASSWORD``` in DATABASES setting in survey/survey/settings.py
-
-3. Test account:
-
-    id|username|password|
-    |---|---|---|
-    |1|admin|nkqh@1234|
-    |2|17021194|nkqh@1234|
