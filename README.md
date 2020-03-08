@@ -1,4 +1,4 @@
-# Survey
+# Django Survey Webapp
 
 1. Setup environment:
 
